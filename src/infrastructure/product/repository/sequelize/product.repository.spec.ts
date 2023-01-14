@@ -81,6 +81,14 @@ describe("Product repository test", () => {
     });
   });
 
+  it("should not find a product", async () => {
+    const productRepository = new ProductRepository();
+
+    await expect(() => productRepository.find("1")).rejects.toThrowError(
+      "Product not found"
+    );
+  });
+
   it("should find all products", async () => {
     const productRepository = new ProductRepository();
     const product = new Product("1", "Product 1", 100);
@@ -92,7 +100,6 @@ describe("Product repository test", () => {
     const foundProducts = await productRepository.findAll();
     const products = [product, product2];
 
-    expect(products).toEqual(foundProducts);    
+    expect(products).toEqual(foundProducts);
   });
-  
 });

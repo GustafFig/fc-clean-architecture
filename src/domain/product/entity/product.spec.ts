@@ -38,4 +38,23 @@ describe("Product unit tests", () => {
     product.changePrice(150);
     expect(product.price).toBe(150);
   });
+
+  it("should throw if price is missing", () => {
+    const product = new Product("123", "Product 1", 100);
+    expect(() => product.changePrice(undefined)).toThrowError(
+      "Price is required"
+    );
+  });
+
+  it("should throw if change price for lower than 0", () => {
+    const product = new Product("123", "Product 1", 100);
+    expect(() => product.changePrice(-10)).toThrowError(
+      "Price must be greater than zero"
+    );
+  });
+
+  it("should possible to make price of product 0", () => {
+    const product = new Product("123", "Product 1", 100);
+    expect(() => product.changePrice(0)).not.toThrowError();
+  });
 });

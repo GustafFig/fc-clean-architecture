@@ -29,6 +29,8 @@ productRoute.post("/", async (req: Request, res: Response) => {
     const output = await createProductUseCase.execute(input);
     res.status(200).send(output);
   } catch (err) {
-    res.status(500).send(err.message);
+    let message = 'Error: Unknow';
+    if (err instanceof Error) message = err.message;
+    res.status(500).send(message);
   }
 });

@@ -6,17 +6,6 @@ const customer = CustomerFactory.createWithAddress(
   new Address("Street", 123, "Zip", "City")
 );
 
-const input = {
-  id: customer.id,
-  name: "John Updated",
-  address: {
-    street: "Street Updated",
-    number: 1234,
-    zip: "Zip Updated",
-    city: "City Updated",
-  },
-};
-
 const MockRepository = () => {
   return {
     create: jest.fn(),
@@ -31,8 +20,25 @@ describe("Unit test for customer update use case", () => {
     const customerRepository = MockRepository();
     const customerUpdateUseCase = new UpdateCustomerUseCase(customerRepository);
 
+    const input = {
+      id: customer.id,
+      name: "John Updated",
+      address: {
+        street: "Street Updated",
+        number: 1234,
+        zip: "Zip Updated",
+        city: "City Updated",
+      },
+    };
+
     const output = await customerUpdateUseCase.execute(input);
 
-    expect(output).toEqual(input);
+    expect(output.id).toEqual(customer.id);
+    expect(output.name).toEqual("John Updated");
+    expect(output.address.street).toEqual("Street Updated");
+    expect(output.address.number).toEqual(1234);
+    expect(output.address.zip).toEqual("Zip Updated");
+    expect(output.address.city).toEqual("City Updated");
+    expect(customerRepository.update).toHaveBeenCalled();
   });
 });

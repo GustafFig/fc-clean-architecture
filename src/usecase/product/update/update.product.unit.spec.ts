@@ -18,14 +18,14 @@ describe("Unit test Update Product use case", () => {
 
     const input = {
       id: product.id,
-      name: product.name,
-      price: product.price,
+      name: "second name",
+      price: 2222,
     };
     const result = await updateProductUseCase.execute(input);
     expect(result).toEqual({
       id: "1",
-      name: "product",
-      price: 1752,
+      name: input.name,
+      price: input.price,
     });
   });
 });
